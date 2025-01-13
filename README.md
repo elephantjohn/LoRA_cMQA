@@ -1,5 +1,6 @@
 # LoRA_cMQA
 ### 环境配置
+requirements.txt
 ```python
 accelerate==0.21.0
 annotated-types==0.7.0
