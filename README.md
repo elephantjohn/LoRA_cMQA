@@ -214,12 +214,27 @@ finetune.py来源于QWen库
 ├── trainer_state.json
 └── training_args.bin
 ```
-## 二.使用adapter过程
+## 二、使用adapter过程
 checkpoint目录下有adapter_config.json里配置了基础模型的路径；
 运行load_lora_adapter.py脚本
 ```python
 from peft import AutoPeftModelForCausalLM
-model = AutoPeftModelForCausalLM.from_pretrained("/root/work/lora/lora_output/checkpoint-6000", device_map="auto",trust_remote_code=True).eval()
-```
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
+# lora微调过的模型, 注意使用peft的AutoPeftModelForCausalLM加载模型
+model = AutoPeftModelForCausalLM.from_pretrained("/root/work/lora/lora_output/checkpoint-6000", device_map="auto",trust_remote_code=True).eval()
+
+# 对比未经lora微调的基础模型，注意使用transformer的AutoModelForCausalLM加载
+#model = AutoModelForCausalLM.from_pretrained("/root/work/qwen/Qwen/models/", device_map="auto",trust_remote_code=True).eval()
+tokenizer = AutoTokenizer.from_pretrained("/root/work/qwen/Qwen/models/", trust_remote_code=True)
+
+#response, history = model.chat(tokenizer, "我家宝宝六个月，吃奶、睡觉常常满头冒汗，以前是不出汗的。请问这是不是病，如何医治？", history=None)
+response, history = model.chat(tokenizer, "手毛，脚毛都很多，很密，都不知道怎么办，有什么永远脱毛方法，不想激光脱毛？", history=None)
+
+print(response)
+```
+经过LoRA微调后的Qwen模型，还能够比较准确的保持其原有的通用知识生成能力，除此之外，LoRA的优势更在于其推理阶段的优势。
+
+## 三、总结
+lora在推理阶段是直接使用训练好的A、B低秩矩阵去替换原预训练模型的对应参数，就可以避免因增加网络的深度所带来的推理延时和额外的计算量。所以特别适用于对推理速度和模型性能都有较高要求的应用场景。
 
