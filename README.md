@@ -113,8 +113,7 @@ finetune.py来源于QWen库
 ### 关键优化
 在3090 24G上用finetune_lora_single_gpu.sh无法运行，GPU Out Of Memory； 需要修改model里的config.json里的"num_hidden_layers": 32 改为16；
 在  --per_device_train_batch_size 2  --per_device_eval_batch_size 1 的情况下，在使用bf16且没有deepspeed的情况下，用时8小时16分；
-在  --per_device_train_batch_size 2  --per_device_eval_batch_size 1 的情况下，在使用fp16且用了deepspeed的情况下，用时；
-
+在  --per_device_train_batch_size 2  --per_device_eval_batch_size 1 的情况下，在使用fp16且用了deepspeed的情况下，跑不起来；
 
 
 ### 训练过程
@@ -122,5 +121,97 @@ finetune.py来源于QWen库
 
 ### GPU占用
 <img width="1008" alt="截屏2025-01-13 22 16 42" src="https://github.com/user-attachments/assets/c2da1851-50cd-4105-b9e8-6aad984c863c" />
+
+### adapter结构
+```json
+.
+├── adapter_config.json
+├── adapter_model.safetensors
+├── checkpoint-1000
+│   ├── adapter_config.json
+│   ├── adapter_model.safetensors
+│   ├── optimizer.pt
+│   ├── qwen.tiktoken
+│   ├── README.md
+│   ├── rng_state.pth
+│   ├── scheduler.pt
+│   ├── special_tokens_map.json
+│   ├── tokenization_qwen.py
+│   ├── tokenizer_config.json
+│   ├── trainer_state.json
+│   └── training_args.bin
+├── checkpoint-2000
+│   ├── adapter_config.json
+│   ├── adapter_model.safetensors
+│   ├── optimizer.pt
+│   ├── qwen.tiktoken
+│   ├── README.md
+│   ├── rng_state.pth
+│   ├── scheduler.pt
+│   ├── special_tokens_map.json
+│   ├── tokenization_qwen.py
+│   ├── tokenizer_config.json
+│   ├── trainer_state.json
+│   └── training_args.bin
+├── checkpoint-3000
+│   ├── adapter_config.json
+│   ├── adapter_model.safetensors
+│   ├── optimizer.pt
+│   ├── qwen.tiktoken
+│   ├── README.md
+│   ├── rng_state.pth
+│   ├── scheduler.pt
+│   ├── special_tokens_map.json
+│   ├── tokenization_qwen.py
+│   ├── tokenizer_config.json
+│   ├── trainer_state.json
+│   └── training_args.bin
+├── checkpoint-4000
+│   ├── adapter_config.json
+│   ├── adapter_model.safetensors
+│   ├── optimizer.pt
+│   ├── qwen.tiktoken
+│   ├── README.md
+│   ├── rng_state.pth
+│   ├── scheduler.pt
+│   ├── special_tokens_map.json
+│   ├── tokenization_qwen.py
+│   ├── tokenizer_config.json
+│   ├── trainer_state.json
+│   └── training_args.bin
+├── checkpoint-5000
+│   ├── adapter_config.json
+│   ├── adapter_model.safetensors
+│   ├── optimizer.pt
+│   ├── qwen.tiktoken
+│   ├── README.md
+│   ├── rng_state.pth
+│   ├── scheduler.pt
+│   ├── special_tokens_map.json
+│   ├── tokenization_qwen.py
+│   ├── tokenizer_config.json
+│   ├── trainer_state.json
+│   └── training_args.bin
+├── checkpoint-6000
+│   ├── adapter_config.json
+│   ├── adapter_model.safetensors
+│   ├── optimizer.pt
+│   ├── qwen.tiktoken
+│   ├── README.md
+│   ├── rng_state.pth
+│   ├── scheduler.pt
+│   ├── special_tokens_map.json
+│   ├── tokenization_qwen.py
+│   ├── tokenizer_config.json
+│   ├── trainer_state.json
+│   └── training_args.bin
+├── qwen.tiktoken
+├── README.md
+├── special_tokens_map.json
+├── tokenization_qwen.py
+├── tokenizer_config.json
+├── trainer_state.json
+└── training_args.bin
+```
 
 
