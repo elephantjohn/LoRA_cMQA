@@ -1,4 +1,5 @@
 # LoRA_cMQA
+## 一、训练adapter过程
 ### 环境配置
 python3.11
 requirements.txt
@@ -212,6 +213,13 @@ finetune.py来源于QWen库
 ├── tokenizer_config.json
 ├── trainer_state.json
 └── training_args.bin
+```
+## 二.使用adapter过程
+checkpoint目录下有adapter_config.json里配置了基础模型的路径；
+运行load_lora_adapter.py脚本
+```python
+from peft import AutoPeftModelForCausalLM
+model = AutoPeftModelForCausalLM.from_pretrained("/root/work/lora/lora_output/checkpoint-6000", device_map="auto",trust_remote_code=True).eval()
 ```
 
 
